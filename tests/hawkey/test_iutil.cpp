@@ -157,6 +157,15 @@ START_TEST(test_version_split)
      */
     fail_if(-1 == pool_setdisttype(pool, DISTTYPE_RPM));
 
+    /*
+     * On "foreign" systems, the implicitobsoleteusescolors
+     * flag is turned off by default.
+     * This leads to unexpected results when working with
+     * Fedora, Mageia or CentOS repositories, so enable it
+     * forcefully.
+     */
+    pool_set_flag(pool, POOL_FLAG_IMPLICITOBSOLETEUSESCOLORS, 1);
+
     char evr[] = "1:5.9.3-8";
     char *epoch, *version, *release;
 
