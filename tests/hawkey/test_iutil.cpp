@@ -150,6 +150,13 @@ END_TEST
 START_TEST(test_version_split)
 {
     Pool *pool = pool_create();
+
+    /*
+     * On "foreign" systems, the disttype will
+     * not default to RPM. Set this explicitly.
+     */
+    fail_if(-1 == pool_setdisttype(pool, DISTTYPE_RPM));
+
     char evr[] = "1:5.9.3-8";
     char *epoch, *version, *release;
 
