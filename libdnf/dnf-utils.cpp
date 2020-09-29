@@ -32,6 +32,8 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <glib/gstdio.h>
+#include <unistd.h>
+#include <pwd.h>
 
 #include "catch-error.hpp"
 #include "dnf-types.h"
