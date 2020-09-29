@@ -1739,7 +1739,7 @@ dnf_sack_load_system_repo(DnfSack *sack, HyRepo a_hrepo, int flags, GError **err
             repoImpl->state_main = _HY_LOADED_CACHE;
     } else {
         g_debug("fetching rpmdb");
-        int flagsrpm = REPO_REUSE_REPODATA | RPM_ADD_WITH_HDRID | REPO_USE_ROOTDIR;
+        int flagsrpm = REPO_REUSE_REPODATA | RPM_ADD_WITH_HDRID | REPO_USE_ROOTDIR | RPMDB_USE_HOMEDIR;
         rc = repo_add_rpmdb_reffp(repo, cache_fp, flagsrpm);
         if (!rc)
             repoImpl->state_main = _HY_LOADED_FETCH;
