@@ -29,10 +29,8 @@ along with libdnf.  If not, see <https://www.gnu.org/licenses/>.
 namespace libdnf::transaction {
 
 class CompsGroup;
-class CompsGroupPackage;
 
 typedef std::shared_ptr< CompsGroup > CompsGroupPtr;
-typedef std::shared_ptr< CompsGroupPackage > CompsGroupPackagePtr;
 
 enum class CompsPackageType : int {
     CONDITIONAL = 1 << 0,
@@ -50,6 +48,9 @@ enum class CompsPackageType : int {
 
 
 namespace libdnf::transaction {
+
+
+class CompsGroupPackage;
 
 
 class CompsGroup : public Item {
@@ -74,8 +75,14 @@ public:
 
     Type getItemType() const noexcept override { return itemType; }
     void save() override;
-    CompsGroupPackagePtr add_package(std::string name, bool installed, CompsPackageType pkg_type);
-    std::vector< CompsGroupPackagePtr > getPackages();
+
+    /// Create a new CompsGroupPackage object and return a reference to it.
+    /// The object is owned by the CompsGroup.
+    CompsGroupPackage & new_package();
+
+    /// Get list of packages associated with the group.
+    const std::vector<std::unique_ptr<CompsGroupPackage>> & get_packages() { return packages; }
+
     //static TransactionItemPtr getTransactionItem(libdnf::utils::SQLite3Ptr conn, const std::string &groupid);
     //static std::vector< TransactionItemPtr > getTransactionItemsByPattern(
     //    libdnf::utils::SQLite3Ptr conn,
@@ -84,7 +91,6 @@ public:
 
 protected:
     const Type itemType = Type::GROUP;
-    void loadPackages();
     void dbSelect(int64_t pk);
     void dbInsert();
 
@@ -94,7 +100,7 @@ private:
     std::string name;
     std::string translated_name;
     CompsPackageType package_types;
-    std::vector< CompsGroupPackagePtr > packages;
+    std::vector<std::unique_ptr<CompsGroupPackage>> packages;
 };
 
 
@@ -117,11 +123,6 @@ public:
     const CompsGroup & get_group() const noexcept { return group; }
 
     void save();
-
-protected:
-    void dbInsert();
-    void dbSelectOrInsert();
-    void dbUpdate();
 
 private:
     int64_t id = 0;
