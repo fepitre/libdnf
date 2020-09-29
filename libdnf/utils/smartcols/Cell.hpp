@@ -26,6 +26,10 @@
 #include <string>
 #include <stdexcept>
 
+extern "C" {
+@LIBSMARTCOLS_COMPAT@ extern int scols_cell_get_alignment(const struct libscols_cell *ce);
+}
+
 class Cell
 {
 public:
