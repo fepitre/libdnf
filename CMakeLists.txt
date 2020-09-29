@@ -42,6 +42,7 @@ if(APPLE)
     set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH};/usr/local/share/cmake/Modules/)
     include_directories(/usr/local/include)
 endif()
+LIST (APPEND CMAKE_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/share/cmake/libsolv/")
 
 
 # build dependencies
