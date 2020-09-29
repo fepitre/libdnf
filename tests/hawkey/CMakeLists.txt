@@ -28,7 +28,8 @@ add_executable(test_hawkey_main ${hawkeytest_SRCS})
 set_target_properties(test_hawkey_main PROPERTIES COMPILE_FLAGS -fPIC)
 target_link_libraries(test_hawkey_main
     libdnf
-    ${CHECK_LIBRARIES}
+    ${CHECK_STATIC_LIBRARIES}
+    ${CHECK_STATIC_LDFLAGS}
     ${SOLV_LIBRARY}
     ${SOLVEXT_LIBRARY}
     ${RPMDB_LIBRARY}
