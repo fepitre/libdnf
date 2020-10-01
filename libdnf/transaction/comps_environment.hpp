@@ -31,9 +31,6 @@ namespace libdnf::transaction {
 class CompsEnvironment;
 typedef std::shared_ptr< CompsEnvironment > CompsEnvironmentPtr;
 
-class CompsEnvironmentGroup;
-typedef std::shared_ptr< CompsEnvironmentGroup > CompsEnvironmentGroupPtr;
-
 }
 
 
@@ -42,6 +39,9 @@ typedef std::shared_ptr< CompsEnvironmentGroup > CompsEnvironmentGroupPtr;
 
 
 namespace libdnf::transaction {
+
+
+class CompsEnvironmentGroup;
 
 
 class CompsEnvironment : public Item {
@@ -65,10 +65,14 @@ public:
     std::string toStr() const override;
     Type getItemType() const noexcept override { return itemType; }
     void save() override;
-    CompsEnvironmentGroupPtr add_group(std::string group_id,
-                                      bool installed,
-                                      CompsPackageType group_type);
-    std::vector< CompsEnvironmentGroupPtr > get_groups();
+
+    /// Create a new CompsEnvironmentGroup object and return a reference to it.
+    /// The object is owned by the CompsEnvironment.
+    CompsEnvironmentGroup & new_group();
+
+    /// Get list of groups associated with the environment.
+    const std::vector<std::unique_ptr<CompsEnvironmentGroup>> & get_groups() { return groups; }
+
     //static TransactionItemPtr getTransactionItem(libdnf::utils::SQLite3Ptr conn, const std::string &envid);
     //static std::vector< TransactionItemPtr > getTransactionItemsByPattern(
     //    libdnf::utils::SQLite3Ptr conn,
@@ -87,7 +91,7 @@ private:
     std::string name;
     std::string translated_name;
     CompsPackageType package_types = CompsPackageType::DEFAULT;
-    std::vector< CompsEnvironmentGroupPtr > groups;
+    std::vector<std::unique_ptr<CompsEnvironmentGroup>> groups;
 };
 
 
@@ -108,12 +112,6 @@ public:
 
     CompsPackageType get_group_type() const noexcept { return group_type; }
     void set_group_type(CompsPackageType value) { group_type = value; }
-
-    // virtual std::string toStr();
-    void save();
-
-protected:
-    void dbInsert();
 
 private:
     int64_t id = 0;
