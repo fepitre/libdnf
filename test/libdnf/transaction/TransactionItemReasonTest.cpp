@@ -1,3 +1,5 @@
+#ifdef SKIP
+
 #include <cstdio>
 #include <iostream>
 #include <string>
@@ -347,3 +349,5 @@ TransactionItemReasonTest::test_TransactionItemReason_compare()
     CPPUNIT_ASSERT_EQUAL(0, TransactionItemReason_compare(TransactionItemReason::USER, TransactionItemReason::USER));
     CPPUNIT_ASSERT_EQUAL(1, TransactionItemReason_compare(TransactionItemReason::USER, TransactionItemReason::GROUP));
 }
+
+#endif

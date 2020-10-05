@@ -1,3 +1,5 @@
+#ifdef SKIP
+
 #ifndef LIBDNF_SWDB_RPMITEM_TEST_HPP
 #define LIBDNF_SWDB_RPMITEM_TEST_HPP
 
@@ -34,3 +36,5 @@ protected:
 };
 
 #endif // LIBDNF_SWDB_RPMITEM_TEST_HPP
+
+#endif

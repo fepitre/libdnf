@@ -1,3 +1,5 @@
+#ifdef SKIP
+
 /*
  * Copyright (C) 2017-2018 Red Hat, Inc.
  *
@@ -85,5 +87,7 @@ private:
 };
 
 }  // namespace libdnf::transaction
+
+#endif
 
 #endif

@@ -1,3 +1,5 @@
+#ifdef SKIP
+
 #include <json.h>
 #include <set>
 #include <sstream>
@@ -210,3 +212,5 @@ TransformerTest::testTransformTrans()
 
     swdb->backup("sql.db");
 }
+
+#endif

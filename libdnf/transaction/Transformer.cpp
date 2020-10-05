@@ -1,3 +1,5 @@
+#ifdef SKIP
+
 /*
  * Copyright (C) 2017-2018 Red Hat, Inc.
  *
@@ -246,7 +248,7 @@ fillPackage(std::shared_ptr< Package > rpm, libdnf::utils::SQLite3::Query &query
     rpm->set_version(query.get< std::string >("version"));
     rpm->set_release(query.get< std::string >("release"));
     rpm->set_arch(query.get< std::string >("arch"));
-    rpm->save();
+    //rpm->save();
 }
 
 /**
@@ -414,7 +416,7 @@ Transformer::transformPackages(libdnf::utils::SQLite3 & history,
         }
 
         // find out if an item was previously obsoleted
-        auto pastObsoleted = obsoletedItems.find(rpm->getId());
+        auto pastObsoleted = obsoletedItems.find(rpm->get_id());
 
         TransactionItemPtr transItem = nullptr;
 
@@ -438,12 +440,12 @@ Transformer::transformPackages(libdnf::utils::SQLite3 & history,
         // resolve replaced by
         switch (action) {
             case TransactionItemAction::OBSOLETED:
-                obsoletedItems[rpm->getId()] = transItem;
-                transItem->addReplacedBy(last);
+                obsoletedItems[rpm->get_id()] = transItem;
+                //transItem->addReplacedBy(last);
                 break;
             case TransactionItemAction::DOWNGRADED:
             case TransactionItemAction::UPGRADED:
-                transItem->addReplacedBy(last);
+                //transItem->addReplacedBy(last);
                 break;
             default:
                 break;
@@ -500,7 +502,7 @@ Transformer::processGroup(Transaction & trans, const char *groupId, struct json_
         }
     }
 
-    compsGroup->save();
+    //compsGroup->save();
     return compsGroup;
 }
 
@@ -549,7 +551,7 @@ Transformer::processEnvironment(Transaction & trans, const char *envId, struct j
         }
     }
 
-    compsEnv->save();
+    //compsEnv->save();
 
     return compsEnv;
 }
@@ -608,10 +610,12 @@ Transformer::processGroupPersistor(libdnf::utils::SQLite3 & swdb, struct json_ob
         trans.set_rpmdb_version_end(trans.get_rpmdb_version_begin());
     }
 
+    /*
     for (auto i : trans.getItems()) {
         i->set_state(TransactionItemState::DONE);
-        i->save();
+        //i->save();
     }
+    */
 
     trans.finish(TransactionState::DONE);
 }
@@ -694,3 +698,5 @@ Transformer::historyPath()
 }
 
 }  // namespace libdnf::transaction
+
+#endif

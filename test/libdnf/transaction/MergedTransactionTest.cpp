@@ -1,3 +1,5 @@
+#ifdef SKIP
+
 #include <set>
 #include <string>
 
@@ -1049,3 +1051,5 @@ MergedTransactionTest::test_multilib_identity()
 
         self.assertFalse(is_in)
 */
+
+#endif

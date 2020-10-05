@@ -1,3 +1,4 @@
+#ifdef SKIP
 /*
  * Copyright (C) 2017-2018 Red Hat, Inc.
  *
@@ -56,30 +57,31 @@ public:
     std::set<std::string> get_runtime_packages() const;
     std::vector< std::pair< int, std::string > > get_console_output();
 
-    std::vector< TransactionItemPtr > getItems();
+    std::vector<std::unique_ptr<CompsEnvironment>> get_comps_environments();
+    std::vector<std::unique_ptr<CompsGroup>> get_comps_groups();
+    std::vector<std::unique_ptr<Package>> get_packages();
 
 protected:
     std::vector<Transaction *> transactions;
 
-    struct ItemPair {
-        ItemPair(TransactionItemPtr first, TransactionItemPtr second)
-          : first{first}
-          , second{second}
-        {
-        }
-        ItemPair(){};
-        TransactionItemPtr first = nullptr;
-        TransactionItemPtr second = nullptr;
+    class ItemPair {
+    public:
+        ItemPair(TransactionItem * first, TransactionItem * second) : first{first}, second{second} {}
+        //ItemPair(){};
+        TransactionItem * first = nullptr;
+        TransactionItem * second = nullptr;
     };
 
-    typedef std::map< std::string, ItemPair > ItemPairMap;
+    using ItemPairMap = std::map<std::string, ItemPair>;
 
-    void mergeItem(ItemPairMap &itemPairMap, TransactionItemPtr transItem);
-    void resolveRPMDifference(ItemPair &previousItemPair, TransactionItemPtr mTransItem);
-    void resolveErase(ItemPair &previousItemPair, TransactionItemPtr mTransItem);
-    void resolveAltered(ItemPair &previousItemPair, TransactionItemPtr mTransItem);
+    void mergeItem(ItemPairMap & itemPairMap, TransactionItem * transItem);
+    void resolveRPMDifference(ItemPair & previousItemPair, TransactionItem * mTransItem);
+    void resolveErase(ItemPair & previousItemPair, TransactionItem * mTransItem);
+    void resolveAltered(ItemPair & previousItemPair, TransactionItem * mTransItem);
 };
 
 }  // namespace libdnf::transaction
 
 #endif // LIBDNF_TRANSACTION_TRANSACTION_HPP
+
+#endif
