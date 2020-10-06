@@ -55,10 +55,12 @@ public:
     const std::string & get_arch() const noexcept { return arch; }
     void set_arch(const std::string & value) { arch = value; }
 
+    /*
     static std::vector<int64_t> searchTransactions(
         libdnf::utils::SQLite3 & conn, const std::vector<std::string> & patterns);
     static TransactionItemReason resolveTransactionItemReason(
         libdnf::utils::SQLite3 & conn, const std::string & name, const std::string & arch, int64_t maxTransactionId);
+    */
 
     std::string to_string() const;
 
