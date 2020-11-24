@@ -115,6 +115,8 @@ add_compile_options(-Wcast-align -Wno-uninitialized -Wredundant-decls -Wwrite-st
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11 -Wmissing-prototypes -Waggregate-return -Wshadow -Werror=implicit-function-declaration")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wmissing-declarations")
 
+SET(CMAKE_SKIP_RPATH TRUE)
+
 # apple: turn rpath off
 set(CMAKE_MACOSX_RPATH 0)
 
