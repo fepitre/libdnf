@@ -134,7 +134,7 @@ add_definitions(-DG_LOG_DOMAIN=\\"libdnf\\")
 add_definitions(-D_FILE_OFFSET_BITS=64)
 
 # tests
-add_definitions(-DTESTDATADIR=\\"${CMAKE_SOURCE_DIR}/data/tests\\")
+add_definitions(-DTESTDATADIR=\\"/tmp/data/tests\\")
 
 # librhsm
 if(ENABLE_RHSM_SUPPORT)
@@ -186,3 +186,5 @@ add_subdirectory(tests)
 if(WITH_BINDINGS)
     add_subdirectory(python/hawkey)
 endif()
+
+file(COPY data DESTINATION /tmp)
